@@ -5,6 +5,7 @@ Import-PSSession $Session
 
 <# Enable logging for all accounts, enable all owner log actions, and retain for 365 days #>
 Set-AdminAuditLogConfig -UnifiedAuditLogIngestionEnabled $true
+# AdminAuditLogAgeLimit appears to not be valid for O365? or only certain plans?
 Set-AdminAuditLogConfig -AdminAuditLogAgeLimit 365.00:00:00
 Get-Mailbox -ResultSize Unlimited -Filter {RecipientTypeDetails -eq "UserMailbox"} | Set-Mailbox -AuditEnabled $true -AuditLogAgeLimit 365
 Get-Mailbox -ResultSize Unlimited -Filter {RecipientTypeDetails -eq "UserMailbox"} | Set-Mailbox -AuditOwner Update,Move,MoveToDeletedItems,SoftDelete,HardDelete,Create,MailboxLogin,UpdateFolderPermissions,UpdateInboxRules,UpdateCalendarDelegation
